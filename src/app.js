@@ -3,18 +3,23 @@ const juegos = ["zelda", "mario", "assassinscreed", "minecraft", "skyrim"];
 const sufijos = ["world", "series", "chronicles", "odyssey", "planet"];
 const extensiones = [".es", ".com", ".net", ".org"];
 
-const generarDominios = (pref, juegos, suf, exts) =>
-  exts.reduce((acc, ext) => (
-    acc[ext] = pref.flatMap(p =>
-      juegos.flatMap(j =>
-         suf.map(s => {
-           const extLetras = ext.slice(1).toLowerCase();
-           const modS = s.toLowerCase().endsWith(extLetras) ? s.slice(0, -extLetras.length) : s;
-           return `${p}${j}${modS}${ext}`;
-         })
-      )
-    ).sort(), acc
-  ), {});
+const generarDominios = (pref, juegos, suf, exts) => {
+  const dominiosPorExtension = {};
+  exts.forEach(ext => {
+    const listaDominios = [];
+    pref.forEach(p => {
+      juegos.forEach(j => {
+        suf.forEach(s => {
+          const extLetras = ext.slice(1).toLowerCase();
+          const modS = s.toLowerCase().endsWith(extLetras) ? s.slice(0, -extLetras.length) : s;
+          listaDominios.push(`${p}${j}${modS}${ext}`);
+        });
+      });
+    });
+    dominiosPorExtension[ext] = listaDominios.sort();
+  });
+  return dominiosPorExtension;
+};
 
 const dominios = generarDominios(prefijos, juegos, sufijos, extensiones);
 
