@@ -10,8 +10,8 @@ const generarDominios = (pref, juegos, suf, exts) => {
     pref.forEach(p => {
       juegos.forEach(j => {
         suf.forEach(s => {
-          const extLetras = ext.slice(1).toLowerCase();
-          const modS = s.toLowerCase().endsWith(extLetras) ? s.slice(0, -extLetras.length) : s;
+          const extLetras = ext.slice(1);
+          const modS = s.endsWith(extLetras) ? s.slice(0, -extLetras.length) : s;
           listaDominios.push(`${p}${j}${modS}${ext}`);
         });
       });
